@@ -1,3 +1,6 @@
+import { useSelector } from "react-redux";
+
 export default function Home() {
-  return <div></div>;
+  const users = useSelector((state) => state.userSlice.users);
+  return <div>{users.length}</div>;
 }
