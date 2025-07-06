@@ -72,6 +72,7 @@ const userSlice = createSlice({
       const id = action.payload;
       if (id) {
         state.users = state.users.filter((user) => user.id !== id);
+        state.isLoading = false;
       }
     });
 

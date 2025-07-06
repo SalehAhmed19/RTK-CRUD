@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import EditModal from "../Modal/EditModal";
 import ViewModal from "../Modal/ViewModal";
 import { useDispatch } from "react-redux";
@@ -7,6 +7,7 @@ import { deleteUser } from "../../RTK/Features/users/userSlice";
 const Card = ({ name, email, id }) => {
   const [ID, setId] = useState();
   const dispatch = useDispatch();
+
   console.log(ID);
   return (
     <div className="relative flex w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
