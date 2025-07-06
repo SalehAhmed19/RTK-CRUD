@@ -26,6 +26,15 @@ export const showUser = createAsyncThunk("showUser", async () => {
   return response.data;
 });
 
+// delete data
+export const deleteUser = createAsyncThunk("deleteUser", async (id) => {
+  const response = await axios.delete(
+    `https://68689289d5933161d70be704.mockapi.io/users/${id}`
+  );
+
+  return response.data;
+});
+
 const userSlice = createSlice({
   name: "userDetail",
   initialState,
@@ -55,6 +64,22 @@ const userSlice = createSlice({
     });
 
     builder.addCase(showUser.rejected, (state, action) => {
+      state.isError = true;
+      console.log({ error: action.error });
+    });
+
+    builder.addCase(deleteUser.fulfilled, (state, action) => {
+      const id = action.payload;
+      if (id) {
+        state.users = state.users.filter((user) => user.id !== id);
+      }
+    });
+
+    builder.addCase(deleteUser.pending, (state) => {
+      state.isLoading = true;
+    });
+
+    builder.addCase(deleteUser.rejected, (state, action) => {
       state.isError = true;
       console.log({ error: action.error });
     });

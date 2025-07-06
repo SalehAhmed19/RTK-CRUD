@@ -14,7 +14,7 @@ export default function AllPost() {
   return (
     <div className="grid grid-cols-4 gap-10 my-10 p-5">
       {users.map((user) => (
-        <Card key={user} name={user.name} email={user.email} />
+        <Card key={user} name={user.name} email={user.email} id={user.id} />
       ))}
     </div>
   );
