@@ -1,8 +1,21 @@
 import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { useState } from "react";
+import Form from "../Form/Form";
+import { useForm } from "react-hook-form";
+import toast, { Toaster } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUser } from "../../RTK/Features/users/userSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function EditModal({ id, setId }) {
   let [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const { reset } = useForm();
+  const users = useSelector((state) => state.userSlice.users);
+  const user = users.find((usr) => usr.id === id);
+  const dispatch = useDispatch();
+
+  // console.log(user);
 
   function open() {
     setId(id);
@@ -12,6 +25,21 @@ export default function EditModal({ id, setId }) {
   function close() {
     setIsOpen(false);
   }
+
+  const onSubmit = (data) => {
+    const combinedData = {
+      id: id,
+      ...data,
+    };
+    console.log(combinedData);
+    // setUpdatedData(data);
+    // console.log(updatedData);
+    dispatch(updateUser(combinedData));
+    reset();
+    setIsOpen(false);
+    toast.success("User info updated!");
+    navigate("/posts");
+  };
 
   return (
     <>
@@ -37,28 +65,12 @@ export default function EditModal({ id, setId }) {
               transition
               className="w-full max-w-md rounded-xl bg-white/5 p-6 backdrop-blur-2xl duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0"
             >
-              <DialogTitle
-                as="h3"
-                className="text-base/7 font-medium text-black"
-              >
-                Payment successful
-              </DialogTitle>
-              <p className="mt-2 text-sm/6 text-black/50">
-                Your payment has been successfully submitted. We’ve sent you an
-                email with all of the details of your order.
-              </p>
-              <div className="mt-4">
-                <Button
-                  className="inline-flex items-center gap-2 rounded-md bg-gray-700 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-600 data-open:bg-gray-700"
-                  onClick={close}
-                >
-                  Got it, thanks!
-                </Button>
-              </div>
+              <Form title={"Update"} onSubmit={onSubmit} user={user} />
             </DialogPanel>
           </div>
         </div>
       </Dialog>
+      <Toaster />
     </>
   );
 }

@@ -11,7 +11,7 @@ export default function AllPost() {
   }, [dispatch]);
 
   const { users, isLoading } = useSelector((state) => state.userSlice);
-  console.log(users);
+  // console.log(users);
   return (
     <>
       {isLoading && (
@@ -21,7 +21,12 @@ export default function AllPost() {
       )}
       <div className="grid grid-cols-4 gap-10 my-10 p-5">
         {users.map((user) => (
-          <Card key={user} name={user.name} email={user.email} id={user.id} />
+          <Card
+            key={user.id}
+            name={user.name}
+            email={user.email}
+            id={user.id}
+          />
         ))}
       </div>
     </>

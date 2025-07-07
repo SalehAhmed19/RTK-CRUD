@@ -6,6 +6,7 @@ export default function InputText({
   label,
   register,
   name,
+  user,
 }) {
   return (
     <div className="relative w-full group">
@@ -15,6 +16,11 @@ export default function InputText({
         type={`${type}`}
         name={name}
         placeholder={`${placeholder}`}
+        defaultValue={
+          (user ? name === "name" && user.name : "") ||
+          (user ? name === "email" && user.email : "") ||
+          (user ? name === "age" && user.age : "")
+        }
         className="peer w-full pl-6 pr-4 pt-6 pb-2 text-sm text-gray-800 bg-white border border-gray-200 rounded-lg shadow-md focus:border-transparent focus:ring-2 focus:ring-indigo-300 focus:outline-none transition-all duration-300 delay-200 placeholder-transparent"
       />
       <label

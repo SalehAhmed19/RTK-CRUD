@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 export default function ViewModal({ id, setId }) {
   const users = useSelector((state) => state.userSlice.users);
   const user = users.filter((user) => user.id === id);
-  console.log(user);
+  // console.log(user);
 
   let [isOpen, setIsOpen] = useState(false);
 
