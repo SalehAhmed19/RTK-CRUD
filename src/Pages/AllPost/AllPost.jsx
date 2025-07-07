@@ -10,8 +10,10 @@ export default function AllPost() {
     dispatch(showUser());
   }, [dispatch]);
 
-  const { users, isLoading } = useSelector((state) => state.userSlice);
-  // console.log(users);
+  const { users, isLoading, searchData } = useSelector(
+    (state) => state.userSlice
+  );
+  console.log(searchData);
   return (
     <>
       {isLoading && (
@@ -20,14 +22,25 @@ export default function AllPost() {
         </div>
       )}
       <div className="grid grid-cols-4 gap-10 my-10 p-5">
-        {users.map((user) => (
-          <Card
-            key={user.id}
-            name={user.name}
-            email={user.email}
-            id={user.id}
-          />
-        ))}
+        {users &&
+          users
+            .filter((user) => {
+              if (searchData.length === 0) {
+                return user;
+              } else {
+                return user.name
+                  .toLowerCase()
+                  .includes(searchData.search.toLowerCase());
+              }
+            })
+            .map((user) => (
+              <Card
+                key={user.id}
+                name={user.name}
+                email={user.email}
+                id={user.id}
+              />
+            ))}
       </div>
     </>
   );

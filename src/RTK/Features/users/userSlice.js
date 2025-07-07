@@ -5,6 +5,7 @@ const initialState = {
   users: [],
   isLoading: false,
   isError: false,
+  searchData: [],
 };
 
 // create action
@@ -49,7 +50,11 @@ export const updateUser = createAsyncThunk("updateUser", async (data) => {
 const userSlice = createSlice({
   name: "userDetail",
   initialState,
-  reducers: {},
+  reducers: {
+    searchData: (state, action) => {
+      state.searchData = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(createUser.fulfilled, (state, action) => {
       state.isLoading = false;
@@ -115,5 +120,5 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-// export {} = userSlice.actions;
+export const { searchData } = userSlice.actions;
 // https://68689289d5933161d70be704.mockapi.io/users
